@@ -14,6 +14,7 @@ def main():
 
 
 def plot_regression(X, Y, w, b):
+    """Plot the data points and the learned regression line."""
     sns.scatterplot(x=X, y=Y)
     x_vals = np.array([min(X), max(X)])
     y_vals = predict(x_vals, w, b)
@@ -39,19 +40,22 @@ def train(X, Y, lr, epochs):
 
 def gradient(X, Y, w, b):
     """Compute the gradients of the loss with respect to w and b."""
-    N = len(X)
     y_pred = predict(X, w, b)
     print(f"y_pred: {y_pred}")
     error = y_pred - Y
-    dw = (2 / N) * np.dot(error, X)
-    db = (2 / N) * np.sum(error)
+    # dw = -(2/n)*sum(X*(Y - y_pred)) sum of multiplications of 2 vectors are represented by dot product
+    dw = 2 * np.average(X * error)
+    # db = -(2/n)*sum(Y - y_pred)
+    db = 2 * np.average(error)
     return dw, db
 
 
 def loss(X, Y, w, b):
     """Compute the mean squared error loss."""
     y_pred = predict(X, w, b)
-    return np.average((Y - y_pred) ** 2)
+    error = Y - y_pred
+    error_squared = (error) ** 2
+    return np.average(error_squared)
 
 
 def predict(X, w, b):
