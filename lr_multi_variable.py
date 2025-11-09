@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def main():
+def main() -> None:
     X1, X2, X3, Y = np.loadtxt("data/pizza_multivar.txt", skiprows=1, unpack=True)
     print(f"X1: {X1}, X2: {X2}, X3: {X3}, Y: {Y}")
     X = np.column_stack((X1, X2, X3))
@@ -13,7 +13,9 @@ def main():
     )
 
 
-def train(X, Y, lr, epochs):
+def train(
+    X: np.ndarray, Y: np.ndarray, lr: float, epochs: int
+) -> tuple[np.ndarray, float]:
     """Train a linear regression model using gradient descent."""
     n_features = X.shape[1]
     W = np.zeros(n_features)
@@ -28,7 +30,9 @@ def train(X, Y, lr, epochs):
     return W, b
 
 
-def gradient(X, Y, W, b):
+def gradient(
+    X: np.ndarray, Y: np.ndarray, W: np.ndarray, b: float
+) -> tuple[np.ndarray, float]:
     """Compute the gradients of the loss with respect to W and b."""
     y_pred = predict(X, W, b)
     error = y_pred - Y
@@ -39,15 +43,15 @@ def gradient(X, Y, W, b):
     return dW, db
 
 
-def loss(X, Y, W, b):
+def loss(X: np.ndarray, Y: np.ndarray, W: np.ndarray, b: float) -> np.floating[any]:
     """Compute the mean squared error loss."""
-    y_pred = predict(X, W, b)
+    y_pred = predict(X=X, W=W, b=b)
     error = Y - y_pred
     error_squared = (error) ** 2
     return np.average(error_squared)
 
 
-def predict(X, W, b):
+def predict(X: np.ndarray, W: np.ndarray, b: float) -> np.ndarray:
     """Make predictions using the linear model."""
     return np.dot(X, W) + b
 
